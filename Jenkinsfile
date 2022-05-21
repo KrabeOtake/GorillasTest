@@ -23,7 +23,7 @@ pipeline {
         stage('Instumental tests') {
             steps {
                 //Launch and wait for emulator
-                sh "${env.ANDROID_HOME}/emulator/emulator -avd Pixel_2_API_28 -memory 3072 & $ANDROID_HOME/platform-tools/adb wait-for-device"  
+                sh "${env.ANDROID_HOME}/emulator/emulator -avd Pixel_5_API_30 -memory 3072 & $ANDROID_HOME/platform-tools/adb wait-for-device"  
                 //Run Espresso tests
                 sh "./gradlew connectedAndroidTest"
                 }
