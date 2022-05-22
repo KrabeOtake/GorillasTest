@@ -24,7 +24,8 @@ pipeline {
             steps {
                 //Launch and wait for emulator
                 sh "${env.ANDROID_HOME}/emulator/emulator -avd Nexus_6_API_30 & $ANDROID_HOME/platform-tools/adb wait-for-device"  
-                //Run Espresso tests
+                sh "su"
+				//Run Espresso tests
                 sh "./gradlew connectedAndroidTest"
                 }
            
