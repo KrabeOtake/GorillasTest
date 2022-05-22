@@ -23,6 +23,7 @@ pipeline {
         stage('Instumental tests') {
             steps {
                 //Launch and wait for emulator
+				sh "adb root"
                 sh "${env.ANDROID_HOME}/emulator/emulator -avd Pixel_5_API_30 & $ANDROID_HOME/platform-tools/adb wait-for-device"  
 				
 				//Run Espresso tests
