@@ -29,6 +29,15 @@ pipeline {
 				//Run Espresso tests
                 sh "./gradlew connectedAndroidTest --stacktrace"
                 }
+				post {
+                always {
+                    //Generate test report
+					sh "ls"
+                    junit 'app/build/outputs/androidTest-results/connected/*.xml'
+                    
+                    
+                }
+            }
            
         }
     }
