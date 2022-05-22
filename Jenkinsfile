@@ -34,6 +34,8 @@ pipeline {
                     //Generate test report
 					sh "ls"
                     junit 'app/build/outputs/androidTest-results/connected/*.xml'
+                    //Send results to qTest Manager
+                    submitJUnitTestResultsToqTest([apiKey: '742f6bdb-e823-4d50-ac96-762adca2628c', containerID: 584385, containerType: 'release', createTestCaseForEachJUnitTestClass: false, createTestCaseForEachJUnitTestMethod: true, overwriteExistingTestSteps: true, parseTestResultsFromTestingTools: false, projectID: 112602, qtestURL: 'https://gorillastest.qtestnet.com', submitToAReleaseAsSettingFromQtest: true, submitToExistingContainer: false, utilizeTestResultsFromCITool: true])
                     
                     
                 }
