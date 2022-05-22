@@ -27,7 +27,7 @@ pipeline {
                 sh "${env.ANDROID_HOME}/emulator/emulator -avd Pixel_5_API_30 & $ANDROID_HOME/platform-tools/adb wait-for-device"  
 				sh "${env.ANDROID_HOME}/platform-tools/adb root"
 				//Run Espresso tests
-                sh "./gradlew connectedAndroidTest"
+                sh "./gradlew connectedAndroidTest --stacktrace"
                 }
            
         }
