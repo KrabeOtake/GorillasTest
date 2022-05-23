@@ -15,8 +15,7 @@ fun homeRobot(
 class HomeRobot
 constructor(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
-)
-{
+) {
     private val myCartTabItem by lazy {
         composeTestRule.onNodeWithText("MY CART")
     }
@@ -27,11 +26,11 @@ constructor(
         composeTestRule.onNodeWithText(title).performClick()
     }
 
-    infix fun myCartScreen( func: MyCartRobot.() -> Unit): MyCartRobot {
+    infix fun myCartScreen(func: MyCartRobot.() -> Unit): MyCartRobot {
         return myCartRobot(composeTestRule, func = func)
     }
 
-    infix fun detailsScreen( func: DetailsRobot.() -> Unit): DetailsRobot {
+    infix fun detailsScreen(func: DetailsRobot.() -> Unit): DetailsRobot {
         return detailsRobot(composeTestRule, func = func)
     }
 

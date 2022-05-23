@@ -13,8 +13,7 @@ fun myCartRobot(
 class MyCartRobot
 constructor(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
-)
-{
+) {
 
     private val homeTabItem by lazy {
         composeTestRule.onNodeWithText("HOME")
@@ -28,14 +27,14 @@ constructor(
 
     fun waitForIdle() = composeTestRule.waitForIdle()
 
-    fun assertSnackItem(count : Int, title : String) {
+    fun assertSnackItem(count: Int, title: String) {
         composeTestRule.onNode(
             hasText(count.toString()) and hasAnySibling(hasText(title)),
             useUnmergedTree = true
         ).assertIsDisplayed()
     }
 
-    fun decreaseSnackCount(title : String) {
+    fun decreaseSnackCount(title: String) {
         composeTestRule.onNode(
             hasContentDescription("Decrease") and hasAnyAncestor(
                 hasText(title)
@@ -43,11 +42,11 @@ constructor(
         ).performClick()
     }
 
-    fun assertTotalPrice(totalPrice : String) {
+    fun assertTotalPrice(totalPrice: String) {
         composeTestRule.onNodeWithTag("Total amount").assertTextEquals(totalPrice)
     }
 
-    fun assertSnackItemDoesNotExist(title : String) {
+    fun assertSnackItemDoesNotExist(title: String) {
         composeTestRule.onNode(hasText(title)).assertDoesNotExist()
     }
 
@@ -60,11 +59,13 @@ constructor(
     }
 
     fun scrollDownToSuggestionList() {
-        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollTo()
+        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction())
+            .onFirst().performScrollTo()
     }
 
-    fun scrollSuggestionListToIndex(index : Int) {
-        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollToIndex(index)
+    fun scrollSuggestionListToIndex(index: Int) {
+        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction())
+            .onFirst().performScrollToIndex(index)
     }
 
     fun clickSnackItem(title: String) {
@@ -75,7 +76,7 @@ constructor(
         composeTestRule.onNodeWithText(title).performTouchInput { swipeLeft() }
     }
 
-    fun assertNodeWithText(text : String) {
+    fun assertNodeWithText(text: String) {
         composeTestRule.onNodeWithText(text).assertIsDisplayed()
     }
 
@@ -83,7 +84,7 @@ constructor(
         composeTestRule.onNodeWithText("Checkout").performClick()
     }
 
-    infix fun detailsScreen( func: DetailsRobot.() -> Unit): DetailsRobot {
+    infix fun detailsScreen(func: DetailsRobot.() -> Unit): DetailsRobot {
         return detailsRobot(composeTestRule, func = func)
     }
 
