@@ -25,6 +25,16 @@ I implemented the Robot pattern. This way it is much easier to read the test cod
 - HomeRobot.kt - implementation of the tests for Details screen
 - MyCartsRobot.kt - implementation of the tests for Details screen
 
+Local run instructions:
+1. Clone the project
+2. Open the Jetsnack project in Android studio
+3. Run the AppTest.kt located in the Jetsnack/app/java/com/example/jetsnack/AppTest.kt
+
+(Almost)Remote run instructions:
+1. Ping me at cheshirekrab@gmail.com
+2. Wait for me to respond that I launched Jenkins =) 
+3. Wait for the results.
+
 ## Jenkins
 Launched and connected a local Jenkins pipeline. It's set up to trigger a build after each push. The build steps and stages are described in Jenkinsfile.
 There are 3 stages defined in Jenkinsfile:
