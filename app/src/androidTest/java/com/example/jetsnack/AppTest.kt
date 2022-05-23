@@ -16,9 +16,10 @@
 
 package com.example.jetsnack
 
-import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.example.jetsnack.robots.myCartRobot
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.printToLog
+import com.example.jetsnack.robots.homeRobot
 import com.example.jetsnack.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
@@ -29,23 +30,19 @@ class AppTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun app_launches() {
-        // Check app launches at the correct destination
-        composeTestRule.onNodeWithText("HOME").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Android's picks").assertIsDisplayed()
-    }
-
-    @Test
     fun testOpenCartScreen() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
+            clickMyCart()
+        } myCartScreen {
             clickMyCart()
         }
     }
 
     @Test
     fun testDecreaseOneSnack() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             assertSnackItem(3, "Ice Cream Sandwich")
             decreaseSnackCount("Ice Cream Sandwich")
             assertSnackItem(2, "Ice Cream Sandwich")
@@ -70,8 +67,9 @@ class AppTest {
 
     @Test
     fun testDecreaseAllOfSnack() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             assertSnackItem(3, "Ice Cream Sandwich")
             assertTotalPrice("\$58.13")
             for (i in 1..3) {
@@ -84,8 +82,9 @@ class AppTest {
 
     @Test
     fun testRemoveSnack() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             assertSnackItem(3, "Ice Cream Sandwich")
             removeSnackItem("Ice Cream Sandwich")
             assertSnackItemDoesNotExist("Ice Cream Sandwich")
@@ -94,19 +93,21 @@ class AppTest {
 
     @Test
     fun testTapSuggestions() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             scrollDownToSuggestionList()
-            tapSuggestionItem("Cupcake")
+            clickSnackItem("Cupcake")
         } detailsScreen {
-            //TODO: assert DetailsScreen
+            assertScreenIsDisplayed()
         }
     }
 
     @Test
     fun testSwipeSnack() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             assertSnackItem(3, "Ice Cream Sandwich")
             swipeToDeleteSnackItem("Ice Cream Sandwich")
             waitForIdle()
@@ -116,8 +117,9 @@ class AppTest {
 
     @Test
     fun testSwipeSuggestions() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             scrollDownToSuggestionList()
             scrollSuggestionListToIndex(10)
             waitForIdle()
@@ -127,9 +129,64 @@ class AppTest {
 
     @Test
     fun testTapCheckout() {
-        myCartRobot(composeTestRule) {
+        homeRobot(composeTestRule) {
             clickMyCart()
+        } myCartScreen {
             clickCheckout()
+        }
+    }
+
+    //DETAILS SCREEN
+
+    @Test
+    fun testSnackDetailsScreen() {
+        homeRobot(composeTestRule) {
+            clickSnackItem("Pretzels")
+        } detailsScreen {
+            waitForIdle()
+            assertScreenIsDisplayed()
+        }
+    }
+
+    @Test
+    fun testExpandDescription() {
+        homeRobot(composeTestRule) {
+            clickSnackItem("Pretzels")
+        } detailsScreen {
+            waitForIdle()
+            assertNodeWithText("SEE MORE")
+            assertSeeLessDoesNotExist()
+            clickSeeMore()
+            assertSeeMoreDoesNotExist()
+            scrollDownToSuggestionList()
+            assertNodeWithText("SEE LESS")
+//            composeTestRule.onRoot().printToLog("currentLabelExists")
+        }
+    }
+
+    @Test
+    fun testChangeQuantity() {
+        homeRobot(composeTestRule) {
+            clickSnackItem("Pretzels")
+        } detailsScreen {
+            waitForIdle()
+            assertQuantity("1")
+            clickIncrease()
+            assertQuantity("2")
+            clickDecrease()
+            clickDecrease()
+            assertQuantity("0")
+            clickDecrease()
+            assertQuantity("0")
+        }
+    }
+    @Test
+    fun testClickAddToCart() {
+        homeRobot(composeTestRule) {
+            clickSnackItem("Pretzels")
+        } detailsScreen {
+            waitForIdle()
+            clickAddToCart()
         }
     }
 }

@@ -67,7 +67,7 @@ constructor(
         composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollToIndex(index)
     }
 
-    fun tapSuggestionItem(title: String) {
+    fun clickSnackItem(title: String) {
         composeTestRule.onNodeWithText(title).performClick()
     }
 
