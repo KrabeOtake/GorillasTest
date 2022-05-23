@@ -49,18 +49,26 @@ class AppTest {
 
     @Test
     fun testDecreaseOneSnack() {
-        composeTestRule.onNodeWithText("MY CART").performClick().assertIsDisplayed()
+        composeTestRule.onNodeWithText("MY CART").performClick()
 //        composeTestRule.onRoot().printToLog("currentLabelExists")
-        composeTestRule.onNode(hasText("3") and hasAnySibling(hasText("Ice Cream Sandwich")), useUnmergedTree = true).assertIsDisplayed()
-        composeTestRule.onNode(hasContentDescription("Decrease") and hasAnyAncestor(
-            hasText("Ice Cream Sandwich")
-        )).performClick()
-        composeTestRule.onNode(hasText("2") and hasAnySibling(hasText("Ice Cream Sandwich")), useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onNode(
+            hasText("3") and hasAnySibling(hasText("Ice Cream Sandwich")),
+            useUnmergedTree = true
+        ).assertIsDisplayed()
+        composeTestRule.onNode(
+            hasContentDescription("Decrease") and hasAnyAncestor(
+                hasText("Ice Cream Sandwich")
+            )
+        ).performClick()
+        composeTestRule.onNode(
+            hasText("2") and hasAnySibling(hasText("Ice Cream Sandwich")),
+            useUnmergedTree = true
+        ).assertIsDisplayed()
     }
 
     @Test
     fun testDecreaseAllOfSnack() {
-        composeTestRule.onNodeWithText("MY CART").performClick().assertIsDisplayed()
+        composeTestRule.onNodeWithText("MY CART").performClick()
 //        composeTestRule.onRoot().printToLog("currentLabelExists")
         composeTestRule.onNode(hasText("Ice Cream Sandwich")).assertIsDisplayed()
         composeTestRule.onNodeWithTag("Total amount").assertTextEquals("\$58.13")
@@ -71,7 +79,56 @@ class AppTest {
                 )
             ).performClick()
         }
-        composeTestRule.onRoot().printToLog("currentLabelExists")
+        composeTestRule.onNode(hasText("Ice Cream Sandwich")).assertDoesNotExist()
         composeTestRule.onNodeWithTag("Total amount").assertTextEquals("\$19.16")
+    }
+
+    @Test
+    fun testRemoveSnack() {
+        composeTestRule.onNodeWithText("MY CART").performClick()
+        composeTestRule.onNode(hasText("Ice Cream Sandwich")).assertIsDisplayed()
+        composeTestRule.onNode(
+            hasContentDescription("Remove item") and hasAnyAncestor(
+                hasText("Ice Cream Sandwich")
+            )
+        ).performClick()
+        composeTestRule.onNode(hasText("Ice Cream Sandwich")).assertDoesNotExist()
+//        composeTestRule.onRoot().printToLog("currentLabelExists")
+    }
+
+    @Test
+    fun testTapSuggestions() {
+        composeTestRule.onNodeWithText("MY CART").performClick()
+        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollTo()
+        composeTestRule.onNodeWithText("Cupcake").performClick()
+        //TODO: assert DetailsScreen
+//        composeTestRule.onRoot().printToLog("currentLabelExists")
+
+    }
+
+    @Test
+    fun testSwipeSnack() {
+        composeTestRule.onNodeWithText("MY CART").performClick()
+        composeTestRule.onNodeWithText("Ice Cream Sandwich").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Ice Cream Sandwich").performTouchInput { swipeLeft() }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Ice Cream Sandwich").assertDoesNotExist()
+//        composeTestRule.onRoot().printToLog("currentLabelExists")
+    }
+
+    @Test
+    fun testSwipeSuggestions() {
+        composeTestRule.onNodeWithText("MY CART").performClick()
+        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollTo()
+        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction()).onFirst().performScrollToIndex(10)
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Oreo").assertDoesNotExist()
+//        composeTestRule.onRoot().printToLog("currentLabelExists")
+    }
+
+    @Test
+    fun testTapCheckout() {
+        composeTestRule.onNodeWithText("MY CART").performClick()
+        composeTestRule.onNodeWithText("Checkout").performClick()
     }
 }
