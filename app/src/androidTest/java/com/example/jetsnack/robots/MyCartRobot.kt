@@ -66,7 +66,7 @@ constructor(
     fun clickSnackItem(title: String) {
         composeTestRule.onNodeWithText(title).performClick()
     }
-    //
+    
     fun swipeToDeleteSnackItem(title: String) {
         composeTestRule.onNodeWithText(title).performTouchInput { swipeLeft() }
     }
