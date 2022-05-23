@@ -87,4 +87,8 @@ constructor(
     fun clickAddToCart() {
         composeTestRule.onNodeWithText("ADD TO CART").performClick()
     }
+
+    fun scrollDown() {
+        composeTestRule.onRoot().performTouchInput {swipeUp(startY = 1700F, endY = 1000F)  }
+    }
 }

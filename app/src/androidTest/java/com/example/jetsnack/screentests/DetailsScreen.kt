@@ -26,11 +26,11 @@ class DetailsScreen {
             clickSnackItem("Pretzels")
         } detailsScreen {
             waitForIdle()
+            scrollDown()
             assertNodeWithText("SEE MORE")
             assertSeeLessDoesNotExist()
             clickSeeMore()
             assertSeeMoreDoesNotExist()
-            scrollDownToSuggestionList()
             assertNodeWithText("SEE LESS")
 //            composeTestRule.onRoot().printToLog("currentLabelExists")
         }

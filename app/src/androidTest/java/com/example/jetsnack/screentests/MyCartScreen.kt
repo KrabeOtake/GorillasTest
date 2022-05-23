@@ -78,7 +78,7 @@ class MyCartScreen {
         homeRobot(composeTestRule) {
             clickMyCart()
         } myCartScreen {
-            scrollDownToSuggestionList()
+            scrollDown()
             clickSnackItem("Cupcake")
         } detailsScreen {
             assertScreenIsDisplayed()
@@ -102,7 +102,8 @@ class MyCartScreen {
         homeRobot(composeTestRule) {
             clickMyCart()
         } myCartScreen {
-            scrollDownToSuggestionList()
+            scrollDown()
+            waitForIdle()
             scrollSuggestionListToIndex(10)
             waitForIdle()
             assertNodeWithText("Oreo")

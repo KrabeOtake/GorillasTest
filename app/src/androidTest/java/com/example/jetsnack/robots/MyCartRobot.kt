@@ -58,11 +58,6 @@ constructor(
         ).performClick()
     }
 
-    fun scrollDownToSuggestionList() {
-        composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction())
-            .onFirst().performScrollTo()
-    }
-
     fun scrollSuggestionListToIndex(index: Int) {
         composeTestRule.onNode(hasText("Total")).onSiblings().filter(hasScrollToIndexAction())
             .onFirst().performScrollToIndex(index)
@@ -82,6 +77,10 @@ constructor(
 
     fun clickCheckout() {
         composeTestRule.onNodeWithText("Checkout").performClick()
+    }
+
+    fun scrollDown() {
+        composeTestRule.onRoot().performTouchInput {swipeUp(startY = 1700F, endY = 1000F)  }
     }
 
     infix fun detailsScreen(func: DetailsRobot.() -> Unit): DetailsRobot {
