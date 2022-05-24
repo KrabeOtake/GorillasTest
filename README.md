@@ -1,4 +1,4 @@
-# Test test automation strategy
+# Test automation strategy
 In my opinion the perfect test automation take a place between the code push by the developer and uploading the app to the store. This includes such aspects:
 1. **What to test**?
 This includes unit, UI, load and performnce tests. In most casses unit tests are created by Developers as part of the DoD and UI tests are done by QAs or Developers. load and performnce tests are mostly nececcasry if your product focuses on high performance tasks. Assuming the TestCase documentation exists, the first step is to determing the priority of automatisation together with (for example) Product Owners. Then start automating going through HighPriority-LowComplexity -> HighPriority-HighComplexity -> LowPriority-LowComplexity -> LowPriority-HighComplexity
